@@ -28,3 +28,8 @@ export const createEmployee = async (req, res) => {
 
     return res.json(newEmployee);
 };
+
+export const getAllEmployees = async (req, res) => {
+    const response = Employees.find();
+    res.send(response)
+}

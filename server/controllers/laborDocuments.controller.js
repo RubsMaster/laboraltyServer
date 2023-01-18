@@ -6,3 +6,11 @@ export const createLaborDocument = async (req, res) => {
     await newDoc.save()
     return res.json(newDoc)
 };
+
+export const getAllDocuments = async (req, res) => {
+    const data = await LaborDocuments.find();
+    console.log(data);
+    res.send(data);
+
+    
+}
