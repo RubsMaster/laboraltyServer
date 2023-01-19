@@ -12,11 +12,15 @@ const laborDocumentsSchema = new mongoose.Schema({
         trim: true
     },
     isAvailable: {
-        type: Boolean,
+        type: String,
         default: false
     },
     isImmediate: {
-        type: Boolean,
+        type: String,
+        default: false
+    },
+    uniqueFields: {
+        type: String,
         default: false
     }
 });
