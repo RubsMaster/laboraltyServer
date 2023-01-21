@@ -25,7 +25,7 @@ const userSchema = new mongoose.Schema({
     outdoorNumber: {
         type: String,
     },
-    postalCode: {
+    zipCode: {
         type: String,
     },
     suburb: {
