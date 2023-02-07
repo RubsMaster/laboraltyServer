@@ -15,12 +15,10 @@ export const createLaborDocument = async (req, res) => {
         uniqueFields
     });
     await newDoc.save()
-    console.log(newDoc)
     return res.json(newDoc)
 };
 
 export const getAllDocuments = async (req, res) => {
     const data = await LaborDocuments.find();
-    console.log(data);
     res.send(data);
 }

@@ -31,6 +31,5 @@ export const createEmployee = async (req, res) => {
 
 export const getAllEmployees = async (req, res) => {
     const data = await Employees.find();
-    console.log(data);
     res.send(data);
 }

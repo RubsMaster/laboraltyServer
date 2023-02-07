@@ -14,7 +14,6 @@ export const postPosts = async (req, res) => {
 
 export const putPosts = async (req, res) => {
     const post = await Post.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    console.log(post);
     return res.send('updated');
 };
 
