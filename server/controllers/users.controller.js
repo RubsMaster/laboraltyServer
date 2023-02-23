@@ -46,12 +46,14 @@ export const createUser = async (req, res) => {
     });
     
     await newUser.save()
+    console.log('User created succesfully')
     
     return res.json(newUser)
 };
 
 export const getPosts = async (req, res) => {
     const post = await Post.find();
+    console.log('Getting users successfully')
     res.send(post)
 };
 

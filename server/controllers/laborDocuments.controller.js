@@ -5,14 +5,16 @@ export const createLaborDocument = async (req, res) => {
         type,
         isAvailable,
         isImmediate,
-        uniqueFields
+        uniqueFields,
+        text
     } = req.body;
     const newDoc = new LaborDocuments({
         name,
         type,
         isAvailable,
         isImmediate,
-        uniqueFields
+        uniqueFields,
+        text
     });
     await newDoc.save()
     return res.json(newDoc)

@@ -13,8 +13,8 @@ app.use(cors());
 //routes 
 app.use(postsRoutes);
 app.use(laborDocumentsRoutes);
-app.use(employeesRoutes)
-app.use(usersRoutes)
-app.use(authRoutes)
+app.use(employeesRoutes);
+app.use(usersRoutes);
+app.use(authRoutes);
 
 export default app

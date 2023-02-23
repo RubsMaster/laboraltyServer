@@ -22,6 +22,9 @@ const laborDocumentsSchema = new mongoose.Schema({
     uniqueFields: {
         type: String,
         default: false
+    },
+    text: {
+        type: String
     }
 });
 
