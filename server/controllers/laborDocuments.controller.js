@@ -1,7 +1,8 @@
 import LaborDocuments from "../models/LaborDocuments.js";
 
 export const createLaborDocument = async (req, res) => {
-    const { name,
+    const { 
+        name,
         type,
         isAvailable,
         isImmediate,
@@ -23,4 +24,13 @@ export const createLaborDocument = async (req, res) => {
 export const getAllDocuments = async (req, res) => {
     const data = await LaborDocuments.find();
     res.send(data);
+}
+
+export const getTextFromID = async (req, res) => {
+    const text = await LaborDocuments.findOne({"name": req.params.id})
+    return res.send(text.text)
+}
+
+export const insertText = async (req, res) => {
+    const text = req.body
 }
