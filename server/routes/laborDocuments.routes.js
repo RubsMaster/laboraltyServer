@@ -7,6 +7,6 @@ import {
 const router = Router();
 
 router.post('/createDoc', createLaborDocument);
-router.get('/getAllDocuments', getAllDocuments)
+router.get('/getAllDocuments', getAllDocuments);
 
 export default router;
