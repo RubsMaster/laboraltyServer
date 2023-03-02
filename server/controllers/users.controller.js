@@ -51,13 +51,24 @@ export const createUser = async (req, res) => {
     return res.json(newUser)
 };
 
-export const getPosts = async (req, res) => {
-    const post = await Post.find();
-    console.log('Getting users successfully')
-    res.send(post)
+export const putUser = async (req, res) => {
+    try {
+        const post = await Users.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        return res.send('updated');
+    } catch (error) {
+        console.log(error);
+    }
+
+};
+
+export const deleteUser = async (req, res) => {
+    const post = await Users.findByIdAndDelete(req.params.id);
+    if (!post) return res.sendStatus(404);
+    return res.sendStatus(204);
 };
 
 export const getAllUsers = async (req, res) => {
     const users = await Users.find();
     res.send(users)
 }
+
