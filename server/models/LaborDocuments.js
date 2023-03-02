@@ -24,7 +24,60 @@ const laborDocumentsSchema = new mongoose.Schema({
         default: false
     },
     text: {
-        type: String
+        type: String,
+        default: false
+    },
+    uniqueName: {
+        type: String,
+        default: false
+    },
+    uniqueType: {
+        type: String,
+        default: false
+    },
+    uniqueName1: {
+        type: String,
+        default: false
+    },
+    uniqueType1: {
+        type: String,
+        default: false
+    },
+    uniqueName2: {
+        type: String,
+        default: false
+    },
+    uniqueType2: {
+        type: String,
+        default: false
+    },
+    uniqueName3: {
+        type: String,
+        default: false
+    },
+    uniqueType3: {
+        type: String,
+        default: false
+    },
+    uniqueName4: {
+        type: String,
+        default: false
+    },
+    uniqueType4: {
+        type: String,
+        default: false
+    },
+    uniqueName5: {
+        type: String,
+        default: false
+    },
+    uniqueType5: {
+        type: String,
+        default: false
+    },
+    id: {
+        type: String,
+        default: false
     }
 });
 
