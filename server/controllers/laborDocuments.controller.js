@@ -1,7 +1,7 @@
 import LaborDocuments from "../models/LaborDocuments.js";
 
 export const createLaborDocument = async (req, res) => {
-    const { 
+    const {
         name,
         type,
         isAvailable,
@@ -50,6 +50,15 @@ export const getAllDocuments = async (req, res) => {
     res.send(data);
 }
 
-export const insertText = async (req, res) => {
-    const text = req.body
+export const editText = async (req, res) => {
+    const { name, text } = req.body
+    const result = await LaborDocuments.findOneAndUpdate(
+        { name: name },
+        {
+            $set: {
+                text: text,
+            }
+        }
+    );
+    res.send(result)
 }
