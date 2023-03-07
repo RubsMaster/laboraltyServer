@@ -72,3 +72,53 @@ export const getAllUsers = async (req, res) => {
     res.send(users)
 }
 
+export const updateUser = async (req, res) =>{
+    try {
+        const {businessName,
+            RFC,
+            firstNameTitular,
+            lastNameTitular,
+            email,
+            street,
+            innerNumber,
+            outdoorNumber,
+            zipCode,
+            suburb,
+            city,
+            state,
+            officePhoneNumber,
+            mobilePhoneNumber,
+            totalEmployees,
+            totalRFC,
+            monthlyDebt,
+            userAssigned,
+            passwordAssigned} = req.bosy;
+            let user = await Users.findById(req.params.id);
+            if(!user){
+                res.status(404).json({msg: 'No existe el usuario'})
+            }
+            user.businessName = businessName;
+            user.RFC = RFC;
+            user.firstNameTitular = firstNameTitular;
+            user.lastNameTitular = lastNameTitular;
+            user.email = email;
+            user.street = street;
+            user.innerNumber = innerNumber;
+            user.outdoorNumber = outdoorNumber;
+            user.zipCode = zipCode;
+            user.suburb = suburb;
+            user.city = city;
+            user.state = state;
+            user.officePhoneNumber = officePhoneNumber;
+            user.mobilePhoneNumber = mobilePhoneNumber;
+            user.totalEmployees = totalEmployees;
+            user.totalRFC = totalRFC;
+            user.monthlyDebt = monthlyDebt;
+            user.userAssigned = userAssigned;
+            user.passwordAssigned = passwordAssigned;
+            user = await Users.findByIdAndUpdate({_id: req.params.id},  req.body, { new: true })
+
+    } catch (error) {
+        
+    }
+}
