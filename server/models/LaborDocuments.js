@@ -75,7 +75,7 @@ const laborDocumentsSchema = new mongoose.Schema({
         type: String,
         default: false
     },
-    id: {
+    isMoral: {
         type: String,
         default: false
     }

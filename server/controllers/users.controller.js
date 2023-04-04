@@ -1,7 +1,6 @@
 import Users from "../models/Users.js";
 
 export const createUser = async (req, res) => {
-
     const {
         businessName,
         RFC,
@@ -51,14 +50,17 @@ export const createUser = async (req, res) => {
     return res.json(newUser)
 };
 
-export const putUser = async (req, res) => {
-    try {
-        const post = await Users.findByIdAndUpdate(req.params.id, req.body, { new: true });
-        return res.send('updated');
-    } catch (error) {
-        console.log(error);
-    }
-
+export const updateUser = async (req, res) => {
+    const { id, lastNameTitular} = req.body
+    const result = await Users.findOneAndUpdate(
+        {_id, id},
+        {
+            $set: {
+                lastNameTitular: lastNameTitular
+            }
+        }
+    )
+    res.send(result)
 };
 
 export const deleteUser = async (req, res) => {
@@ -70,5 +72,10 @@ export const deleteUser = async (req, res) => {
 export const getAllUsers = async (req, res) => {
     const users = await Users.find();
     res.send(users)
+}
+
+export const getUser = async (req, res) => {
+    const user = await Users.findById(req.params.id)    
+    res.send(user)
 }
 

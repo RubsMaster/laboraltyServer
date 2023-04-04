@@ -9,6 +9,6 @@ const router = Router();
 
 router.post('/createDoc', createLaborDocument);
 router.get('/getAllDocuments', getAllDocuments);
-router.put('/editText', editText)
+router.put('/editText', editText);
 
 export default router;
