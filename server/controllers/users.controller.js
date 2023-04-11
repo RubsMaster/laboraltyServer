@@ -50,19 +50,6 @@ export const createUser = async (req, res) => {
     return res.json(newUser)
 };
 
-export const updateUser = async (req, res) => {
-    const { id, lastNameTitular} = req.body
-    const result = await Users.findOneAndUpdate(
-        {_id, id},
-        {
-            $set: {
-                lastNameTitular: lastNameTitular
-            }
-        }
-    )
-    res.send(result)
-};
-
 export const deleteUser = async (req, res) => {
     const post = await Users.findByIdAndDelete(req.params.id);
     if (!post) return res.sendStatus(404);
@@ -74,15 +61,13 @@ export const getAllUsers = async (req, res) => {
     res.send(users)
 }
 
-<<<<<<< HEAD
 export const getUser = async (req, res) => {
     const user = await Users.findById(req.params.id)    
     res.send(user)
 }
 
-=======
 export const updateUser = async (req, res) =>{
-    try {
+    
         const {businessName,
             RFC,
             firstNameTitular,
@@ -101,7 +86,7 @@ export const updateUser = async (req, res) =>{
             totalRFC,
             monthlyDebt,
             userAssigned,
-            passwordAssigned} = req.bosy;
+            passwordAssigned} = req.body;
             let user = await Users.findById(req.params.id);
             if(!user){
                 res.status(404).json({msg: 'No existe el usuario'})
@@ -126,9 +111,7 @@ export const updateUser = async (req, res) =>{
             user.userAssigned = userAssigned;
             user.passwordAssigned = passwordAssigned;
             user = await Users.findByIdAndUpdate({_id: req.params.id},  req.body, { new: true })
-
-    } catch (error) {
-        
-    }
+            console.log("saved")
+            res.send(user)
+    
 }
->>>>>>> origin/main
