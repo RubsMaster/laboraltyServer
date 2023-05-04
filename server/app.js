@@ -5,6 +5,7 @@ import laborDocumentsRoutes from "./routes/laborDocuments.routes.js";
 import employeesRoutes from "./routes/employees.routes.js";
 import usersRoutes from "./routes/users.routes.js";
 import authRoutes from "./routes/auth.routes.js";
+import adminRoutes from "./routes/admin.routes.js";
 
 const app = express();
 //midleware
@@ -16,5 +17,6 @@ app.use(laborDocumentsRoutes);
 app.use(employeesRoutes);
 app.use(usersRoutes);
 app.use(authRoutes);
+app.use(adminRoutes);
 
 export default app

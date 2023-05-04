@@ -1,15 +1,15 @@
 import { Router } from "express";
-import { check } from "express-validator";
+import { checkJwt } from "../middlewares/admin.middleware.js";
 
 import {
-    login
+    loginUser,
+    changePassword
 } from "../controllers/auth.controller.js";
 
 const router = Router();
 
-router.post('/login', [
-    check('user', 'this cannot be empty').isEmpty()
-], login)
+router.post('/auth/login', loginUser);
 
+router.post('/auth/change-password', [checkJwt], changePassword);
 
 export default router;
