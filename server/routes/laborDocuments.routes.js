@@ -2,13 +2,19 @@ import { Router } from "express";
 import {
     createLaborDocument,
     getAllDocuments,
-    editText
+    getDocByName,
+    editText,
+    getDoc,
+    deleteDoc
 } from "../controllers/laborDocuments.controller.js";
 
 const router = Router();
 
 router.post('/createDoc', createLaborDocument);
 router.get('/getAllDocuments', getAllDocuments);
+router.post('/getDocByName', getDocByName);
+router.get('/getDoc/:id', getDoc);
+router.delete('/deleteDoc/:id', deleteDoc)
 router.put('/editText', editText);
 
 export default router;

@@ -24,7 +24,10 @@ const laborDocumentsSchema = new mongoose.Schema({
         default: false
     },
     text: {
-        type: String,
+        type: String
+    },
+    isMoral: {
+        type: Boolean,
         default: false
     },
     uniqueName: {
@@ -72,10 +75,6 @@ const laborDocumentsSchema = new mongoose.Schema({
         default: false
     },
     uniqueType5: {
-        type: String,
-        default: false
-    },
-    isMoral: {
         type: String,
         default: false
     }
