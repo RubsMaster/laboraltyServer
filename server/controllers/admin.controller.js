@@ -1,19 +1,19 @@
-// administrador.controller.js
-import bcrypt from 'bcrypt';
-import Admin from '../models/admin.js';
+//  admin.controller.js
+ import bcrypt from 'bcrypt';
+ import Admin from '../models/Admin.js';
 
-export const createAdmin = async  (req, res) => {
-  const { userName, email, password } = req.body;
-  const hashedPassword = await bcrypt.hash(password, 10);
-  const admin = new Admin({
-    userName,
-    email,
-    password: hashedPassword,
-    role: 'admin'
-  });
-  await admin.save();
-  return res.status(200).json(admin);
-}
+ export const createAdmin = async  (req, res) => {
+   const { userName, email, password } = req.body;
+   const hashedPassword = await bcrypt.hash(password, 10);
+   const admin = new Admin({
+     userName,
+     email,
+     password: hashedPassword,
+     role: 'admin'
+   });
+   await admin.save();
+   return res.status(200).json(admin);
+ }
 
 export const getAdmins = async (req, res) => {
   try {

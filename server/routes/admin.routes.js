@@ -2,7 +2,7 @@ import { Router } from "express";
 
 //funciones del controller para crear usuarios con el rol de administrador
 import {
-  createAdmin,
+  // createAdmin,
   deleteAdmin,
   getAdmins,
   updateAdmin
@@ -15,7 +15,7 @@ import { checkRole } from "../middlewares/role.middleware.js";
 const router = Router();
 
 // Ruta para crear un nuevo administrador
-router.post("/users/create", [checkJwt, checkRole(['admin'])], createAdmin);
+// router.post("/users/create", [checkJwt, checkRole(['admin'])], createAdmin);
 
 
 router.get("/users", [checkJwt, checkRole(['admin'])], getAdmins);

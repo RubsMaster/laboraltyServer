@@ -62,7 +62,7 @@ export const getAllUsers = async (req, res) => {
 }
 
 export const getUser = async (req, res) => {
-    const user = await Users.findById(req.params.id)    
+    const user = await Users.findById(req.params.id)
     res.send(user)
 }
 

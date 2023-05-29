@@ -6,6 +6,7 @@ export const createLaborDocument = async (req, res) => {
         type,
         isAvailable,
         isImmediate,
+        isMoral,
         uniqueFields,
         text,
         uniqueName,
@@ -26,6 +27,7 @@ export const createLaborDocument = async (req, res) => {
         type,
         isAvailable,
         isImmediate,
+        isMoral,
         uniqueFields,
         text,
         uniqueName,
@@ -42,7 +44,7 @@ export const createLaborDocument = async (req, res) => {
         uniqueType5
     });
     await newDoc.save()
-    return res.json(newDoc)
+    return res.json(newDoc._id)
 };
 
 export const getAllDocuments = async (req, res) => {
@@ -50,15 +52,39 @@ export const getAllDocuments = async (req, res) => {
     res.send(data);
 }
 
+export const getDoc = async (req, res) => {
+    const doc = await LaborDocuments.findById(req.params.id)   
+    
+    res.json(doc)
+}
+
+export const getTextFromDoc = async (req, res) => {
+    const doc = await LaborDocuments.findById(req.params.id)
+    res.json(doc.text)
+}
+
+export const getDocByName = async (req, res) => {
+    const { docName, isMoral } = req.body;
+    const doc = await LaborDocuments.findOne({ name: docName, isMoral: isMoral }).exec();
+    res.json(doc);
+};
+
+
+export const deleteDoc = async (req, res) => {
+    const borrr = await LaborDocuments.findByIdAndRemove(req.params.id)
+    res.send("se elimino con exito")
+}
+
 export const editText = async (req, res) => {
-    const { name, text } = req.body
-    const result = await LaborDocuments.findOneAndUpdate(
-        { name: name },
+    const { id, text } = req.body
+    const result = await LaborDocuments.findByIdAndUpdate(
+        id,
         {
             $set: {
-                text: text,
+                text: text
             }
         }
-    );
+    )
+    
     res.send(result)
 }
