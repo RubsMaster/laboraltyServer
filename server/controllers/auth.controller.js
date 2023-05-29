@@ -1,6 +1,6 @@
-// import bcrypt from 'bcrypt';
+import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-// import Admin from '../models/admin.js';
+import Admin from '../models/Admin.js';
 import { SECRET_KEY } from "../config.js";
 
 
@@ -43,14 +43,14 @@ export const changePassword = async (req, res) => {
       // El usuario no existe en la base de datos
       return res.status(404).json({ message: 'User not found' });
     }
-    // // Verificar la contraseña antigua
-    // const isMatch = await bcrypt.compare(oldPassword, user.password);
-    // if (!isMatch) {
-    //   return res.status(400).json({ message: 'Invalid credentials' });
-    // }
-    // //encriptacion 
-    // const salt = await bcrypt.genSalt(10);
-    // user.password = await bcrypt.hash(newPassword, salt);
+    // Verificar la contraseña antigua
+    const isMatch = await bcrypt.compare(oldPassword, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ message: 'Invalid credentials' });
+    }
+    //encriptacion 
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(newPassword, salt);
 
     await user.save();
     //Envia la resopuesta satisfactoria
