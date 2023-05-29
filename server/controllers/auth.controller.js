@@ -15,11 +15,11 @@ export const loginUser = async (req, res) => {
     }
 
     // Verificar la contraseña encriptada
-    // const isPasswordCorrect = await bcrypt.compare(password, admin.password);
-    // if (!isPasswordCorrect) {
-    //   // La contraseña no es correcta
-    //   return res.status(400).json({ message: 'Contraseña incorrecta' });
-    // }
+     const isPasswordCorrect = await bcrypt.compare(password, admin.password);
+     if (!isPasswordCorrect) {
+       // La contraseña no es correcta
+       return res.status(400).json({ message: 'Contraseña incorrecta' });
+     }
 
     // Crear un token de autenticación con JWT
     const token = jwt.sign({ id: admin._id, userName: Admin.userName }, SECRET_KEY, { expiresIn: '1h' });
