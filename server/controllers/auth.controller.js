@@ -4,11 +4,11 @@ import Admin from '../models/Admin.js';
 import { SECRET_KEY } from "../config.js";
 
 
-export const loginUser = async (req, res) => {
-  const { userName, password } = req.body;
+export const logInUser = async (req, res) => {
+  const { username, password } = req.body;
   try {
     // Buscar el administrador en la base de datos
-    const admin = await Admin.findOne({ userName });
+    const admin = await Admin.findOne({ username });
     if (!admin) {
       // El administrador no existe en la base de datos
       return res.status(404).json({ message: 'Administrador no encontrado' });

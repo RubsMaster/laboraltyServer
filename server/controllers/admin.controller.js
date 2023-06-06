@@ -3,13 +3,12 @@
  import Admin from '../models/Admin.js';
 
  export const createAdmin = async  (req, res) => {
-   const { userName, email, password } = req.body;
+   const { username, password, role } = req.body;
    const hashedPassword = await bcrypt.hash(password, 10);
    const admin = new Admin({
-     userName,
-     email,
+     username,
      password: hashedPassword,
-     role: 'admin'
+     role
    });
    await admin.save();
    return res.status(200).json(admin);
@@ -32,7 +31,7 @@ export const deleteAdmin = async (req, res) => {
 
 export const updateAdmin = async (req, res) => {
   const { id } = req.params;
-  const { userName, email, role } = req.body;
+  const { username, role } = req.body;
 
   try {
     // Buscar el administrador que se quiere actualizar por su ID
@@ -42,8 +41,7 @@ export const updateAdmin = async (req, res) => {
       return res.status(404).json({ message: 'Administrador no encontrado' });
     }
     // Actualizar los campos del administrador con los nuevos valores
-    adminToUpdate.userName = userName || adminToUpdate.userName;
-    adminToUpdate.email = email || adminToUpdate.email;
+    adminToUpdate.username = username || adminToUpdate.username;
     adminToUpdate.role = role || adminToUpdate.role
     // Guardar los cambios en la base de datos
     await adminToUpdate.save();
