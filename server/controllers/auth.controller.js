@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import Admin from '../models/Admin.js';
+import Admin from '../models/admin/Admin.js';
 import { SECRET_KEY } from "../config.js";
 
 

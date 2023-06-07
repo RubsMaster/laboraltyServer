@@ -1,4 +1,4 @@
-import Admin from '../models/Admin.js';
+import Admin from '../models/admin/Admin.js';
 
 export const checkRole = (roles) => {
   return async (req, res, next) => {
