@@ -6,7 +6,7 @@ import {
     editText,
     getDoc,
     deleteDoc
-} from "../controllers/laborDocuments.controller.js";
+} from "../../controllers/laborDocuments.controller.js";
 
 const router = Router();
 

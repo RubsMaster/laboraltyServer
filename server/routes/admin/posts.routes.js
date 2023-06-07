@@ -4,7 +4,7 @@ import {
     postPosts,
     putPosts,
     deletePosts
- } from "../controllers/posts.controller.js";
+ } from "../../controllers/posts.controller.js";
 
 const router = Router();
 
