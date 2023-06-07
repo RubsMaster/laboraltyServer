@@ -22,7 +22,7 @@ export const logInUser = async (req, res) => {
      }
 
     // Crear un token de autenticación con JWT
-    const token = jwt.sign({ id: admin._id, userName: Admin.userName }, SECRET_KEY, { expiresIn: '1h' });
+    const token = jwt.sign({ id: admin._id, username: Admin.username }, SECRET_KEY, { expiresIn: '1h' });
     
     // Enviar el token de autenticación en la respuesta
     res.status(200).json({ message:'OK', token });
