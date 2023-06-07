@@ -1,4 +1,4 @@
-import LaborDocuments from "../models/LaborDocuments.js";
+import LaborDocuments from "../../models/admin/LaborDocuments.js";
 
 export const createLaborDocument = async (req, res) => {
     const {

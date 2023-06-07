@@ -1,10 +1,10 @@
 import { Router } from "express";
-import { checkJwt } from "../middlewares/admin.middleware.js";
+import { checkJwt } from "../../middlewares/admin.middleware.js";
 
 import {
     logInUser,
     changePassword
-} from "../controllers/auth.controller.js";
+} from "../../controllers/auth.controller.js";
 
 const router = Router();
 

@@ -1,4 +1,4 @@
-import Post from "../models/Post.js";
+import Post from "../../models/admin/Post.js";
 
 export const getPosts = async (req, res) => {
     const post = await Post.find();

@@ -6,11 +6,11 @@ import {
   deleteAdmin,
   getAdmins,
   updateAdmin
-} from "../controllers/admin.controller.js";
+} from "../../controllers/admin/admin.controller.js";
 
 //middleware para la autenticacion de los usuarios
-import { checkJwt } from "../middlewares/admin.middleware.js";
-import { checkRole } from "../middlewares/role.middleware.js";
+import { checkJwt } from "../../middlewares/admin.middleware.js";
+import { checkRole } from "../../middlewares/role.middleware.js";
 
 const router = Router();
 
