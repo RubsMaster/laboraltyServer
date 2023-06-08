@@ -8,7 +8,7 @@ import {
 
 const router = Router();
 
-router.post('/auth/logIn', logInUser);
+router.post('/auth/login', logInUser);
 router.post('/auth/change-password', [checkJwt], changePassword);
 
 export default router;
