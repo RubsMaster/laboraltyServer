@@ -3,7 +3,7 @@ import cors from "cors";
 import postsRoutes from "./routes/admin/posts.routes.js";
 import laborDocumentsRoutes from "./routes/admin/laborDocuments.routes.js";
 import employeesRoutes from "./routes/admin/employees.routes.js";
-import usersRoutes from "./routes/admin/users.routes.js";
+import accountantRoutes from "./routes/admin/accountant.routes.js";
 import authRoutes from "./routes/admin/auth.routes.js";
 import adminRoutes from "./routes/admin/admin.routes.js";
 
@@ -15,7 +15,7 @@ app.use(cors());
 app.use(postsRoutes);
 app.use(laborDocumentsRoutes);
 app.use(employeesRoutes);
-app.use(usersRoutes);
+app.use(accountantRoutes);
 app.use(authRoutes);
 app.use(adminRoutes);
 
