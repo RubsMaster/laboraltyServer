@@ -1,25 +1,32 @@
-import Credential from "../models/Credential.js";
+import Consultant from "../../models/accountant/Consultant.js";
 
-export const createCredential = async (req, res) => {
-    const { user, password, rol, relatedId } = req.body;
-
-    // Encriptación de la contraseña
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
-
-    const newCredential = new Credential({
-        user,
-        password: hashedPassword, // Asignar la contraseña encriptada
-        rol,
-        relatedId
+export const createConsultant = async (req, res) => {
+    const {
+        jobTitle,
+        firstName,
+        middleName,
+        lastName,
+        officePhonenumber,
+        mobilePhonenumber,
+        userAssigned,
+        passwordAssigned
+    } = req.body;
+    const newConsultant = new Consultant({
+        jobTitle,
+        firstName,
+        middleName,
+        lastName,
+        officePhonenumber,
+        mobilePhonenumber,
+        userAssigned,
+        passwordAssigned
     });
     
-    await newCredential.save();
-    console.log('Credential created successfully');
+    await newConsultant.save()
+    console.log('Consultant created succesfully')
     
-    return res.json(newCredential);
+    return res.json(newConsultant)
 };
-
 
 // export const deleteUser = async (req, res) => {
 //     const post = await Users.findByIdAndDelete(req.params.id);
@@ -27,18 +34,17 @@ export const createCredential = async (req, res) => {
 //     return res.sendStatus(204);
 // };
 
- export const getAllCredentials = async (req, res) => {
-     const credentials = await Credential.find();
-     res.send(credentials)
- }
+export const getAllConsultants = async (req, res) => {
+    const consultants = await Consultant.find();
+    res.send(consultants)
+}
 
- export const getCredential = async (req, res) => {
-     const cred = await Credential.findOne({ user: req.params.name})
-     res.send(cred)
- }
+export const getConsultant = async (req, res) => {
+    const consultant = await Consultant.findById(req.params.id)
+    res.send(consultant)
+}
 
-
-// export const updateUser = async (req, res) => {
+// export const updateClient = async (req, res) => {
 //     const {
 //       businessName,
 //       RFC,

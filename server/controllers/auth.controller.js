@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import Admin from '../models/admin/Admin.js';
+import Credential from "../models/Credential.js";
 import { SECRET_KEY } from "../config.js";
 
 
@@ -8,10 +9,10 @@ export const logInUser = async (req, res) => {
   const { username, password } = req.body;
   try {
     // Buscar el administrador en la base de datos
-    const admin = await Admin.findOne({ username });
+    const admin = await Credential.findOne({ username });
     if (!admin) {
       // El administrador no existe en la base de datos
-      return res.status(404).json({ message: 'Administrador no encontrado' });
+      return res.status(404).json({ message: 'Usuario no encontrado' });
     }
 
     // Verificar la contraseña encriptada
