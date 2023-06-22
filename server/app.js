@@ -7,6 +7,7 @@ import usersRoutes from "./routes/admin/users.routes.js";
 import authRoutes from "./routes/admin/auth.routes.js";
 import adminRoutes from "./routes/admin/admin.routes.js";
 import credentialRoutes from "./routes/credential.routes.js";
+import consultantRoutes from "./routes/accountant/consultants.routes.js"
 
 import clientRoutes from "./routes/accountant/clients.routes.js";
 
@@ -23,7 +24,7 @@ app.use(authRoutes);
 app.use(adminRoutes);
 app.use(clientRoutes);
 app.use(credentialRoutes);
-
+app.use(consultantRoutes);
 
 
 export default app

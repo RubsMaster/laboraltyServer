@@ -1,3 +1,4 @@
+import bcrypt from 'bcrypt';
 import Credential from "../models/Credential.js";
 
 export const createCredential = async (req, res) => {
