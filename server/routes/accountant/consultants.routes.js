@@ -10,6 +10,7 @@ const router = Router();
 router.post('/createConsultant', createConsultant);
 router.get('/getAllConsultants', getAllConsultants);
 router.get('/getConsultant/:id', getConsultant);
+
 // router.patch('/updateUser/:id', updateUser);
 
 export default router;
