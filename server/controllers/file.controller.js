@@ -1,4 +1,4 @@
-import upload from "../middlewares/upload.middleware"
+import uploadFilesMiddleware from "../middlewares/upload.middleware.js"
  export const uploadFiles = async (req, res) => {
     try {
       await upload(req, res);

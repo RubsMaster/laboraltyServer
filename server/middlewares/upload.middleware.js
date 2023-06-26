@@ -1,9 +1,9 @@
-import connectDB from "./db.js";
+import { connectDB } from "../db.js";
 import util from "util";
 import multer from "multer";
 import { GridFsStorage } from "multer-gridfs-storage";
 
-var storage = new GridFsStorage({
+const storage = new GridFsStorage({
   url: connectDB.url + connectDB.database,
   options: { useNewUrlParser: true, useUnifiedTopology: true },
   file: (req, file) => {
@@ -21,6 +21,6 @@ var storage = new GridFsStorage({
   }
 });
 
-var uploadFiles = multer({ storage: storage }).single("file");
-var uploadFilesMiddleware = util.promisify(uploadFiles);
-module.exports = uploadFilesMiddleware;
+const uploadFiles = multer({ storage: storage }).single("file");
+const uploadFilesMiddleware = util.promisify(uploadFiles);
+export default uploadFilesMiddleware;
