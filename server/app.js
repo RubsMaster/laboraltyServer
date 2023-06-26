@@ -8,8 +8,8 @@ import authRoutes from "./routes/admin/auth.routes.js";
 import adminRoutes from "./routes/admin/admin.routes.js";
 import credentialRoutes from "./routes/credential.routes.js";
 import consultantRoutes from "./routes/accountant/consultants.routes.js"
-
 import clientRoutes from "./routes/accountant/clients.routes.js";
+import fileRoutes from "./routes/file.routes.js";
 
 const app = express();
 //midleware
@@ -25,6 +25,6 @@ app.use(adminRoutes);
 app.use(clientRoutes);
 app.use(credentialRoutes);
 app.use(consultantRoutes);
-
+app.use(fileRoutes)
 
 export default app
