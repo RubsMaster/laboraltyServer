@@ -7,13 +7,19 @@ import fs from 'fs';
 
 const __basedir = path.resolve();
 
+// Crea el directorio si no existe
+const uploadDirectory = __basedir + "/assets/images/";
+if (!fs.existsSync(uploadDirectory)) {
+  fs.mkdirSync(uploadDirectory, { recursive: true });
+}
+
 const connectionOptions = await connectDB();
 
 const storage = new GridFsStorage({
   url: connectionOptions.url,
   options: { useNewUrlParser: true, useUnifiedTopology: true },
   destination: (req, file, cb) => {
-    cb(null, __basedir + "/resources/static/assets/uploads/");
+    cb(null, __basedir + "/assets/images/");
   },
   file: (req, file) => {
     const match = ["image/png", "image/jpeg"];

@@ -1,26 +1,32 @@
 import uploadFilesMiddleware from "../middlewares/upload.middleware.js";
-import { MongoClient } from 'mongodb';
+import mongoose from 'mongoose';
 import { connectDB } from "../db.js";
 import path from "path";
 import fs from 'fs';
 
 
 const __basedir = path.resolve();
+const baseUrl = "http://localhost:4000"; // Cambia esto a la URL base de tu aplicación
 
+const connectionOptions = await connectDB();
+
+const Grid = mongoose.mongo.Grid;
+const conn = mongoose.connection;
 
 export const uploadFiles = async (req, res) => {
   try {
     await uploadFilesMiddleware(req, res);
     console.log(req.file);
-
+    console.log(req.file.filename);
     if (req.file == undefined) {
       return res.send({
-        message: "You must select a file.",
+        message: "You must select a file."
       });
     }
 
     return res.send({
       message: "File has been uploaded.",
+      filename: req.file.filename
     });
   } catch (error) {
     console.log(error);
@@ -31,54 +37,50 @@ export const uploadFiles = async (req, res) => {
   }
 };
 
-export const getListFiles = (req, res) => {
-  const directoryPath = __basedir + "/resources/static/assets/uploads/";
-
-  fs.readdir(directoryPath, function (err, files) {
-    if (err) {
-      res.status(500).send({
-        message: "Unable to scan files!",
-      });
-    }
-
-    let fileInfos = [];
-
-    files.forEach((file) => {
-      fileInfos.push({
-        name: file,
-        url: baseUrl + file,
-      });
+export const getListFiles = async (req, res) => {
+  try {
+    const bucket = new mongoose.mongo.GridFSBucket(conn.db, {
+      bucketName: connectionOptions.database
     });
 
-    res.status(200).send(fileInfos);
-  });
-};
+    const fileInfos = await bucket.find().toArray();
+    
+    const files = fileInfos.map(file => ({
+      name: file.filename,
+      url: `${baseUrl}/getFile/${file.filename}`
+    }));
 
+    res.status(200).send(files);
+  } catch (error) {
+    console.log(error);
+
+    res.status(500).send({
+      message: "Error retrieving files"
+    });
+  }
+};
 
 export const download = async (req, res) => {
   try {
-    await mongoClient.connect();
-
-    const database = mongoClient.db(dbConfig.database);
-    const bucket = new GridFSBucket(database, {
-      bucketName: dbConfig.imgBucket,
+    const bucket = new mongoose.mongo.GridFSBucket(conn.db, {
+      bucketName: connectionOptions.database
     });
 
-    let downloadStream = bucket.openDownloadStreamByName(req.params.name);
+    const downloadStream = bucket.openDownloadStreamByName(req.params.name);
 
     downloadStream.on("data", function (data) {
-      return res.status(200).write(data);
+      res.write(data);
     });
 
     downloadStream.on("error", function (err) {
-      return res.status(404).send({ message: "Cannot download the Image!" });
+      res.status(404).send({ message: "Cannot download the Image!" });
     });
 
     downloadStream.on("end", () => {
-      return res.end();
+      res.end();
     });
   } catch (error) {
-    return res.status(500).send({
+    res.status(500).send({
       message: error.message,
     });
   }
