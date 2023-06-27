@@ -5,33 +5,33 @@ import Credential from "../models/Credential.js";
 import { SECRET_KEY } from "../config.js";
 
 
-export const logInUser = async (req, res) => {
-  const { username, password } = req.body;
-  try {
-    // Buscar el administrador en la base de datos
-    const admin = await Credential.findOne({ username });
-    if (!admin) {
-      // El administrador no existe en la base de datos
-      return res.status(404).json({ message: 'Usuario no encontrado' });
-    }
+// export const logInUser = async (req, res) => {
+//   const { username, password } = req.body;
+//   try {
+//     // Buscar el administrador en la base de datos
+//     const admin = await Credential.findOne({ username });
+//     if (!admin) {
+//       // El administrador no existe en la base de datos
+//       return res.status(404).json({ message: 'Usuario no encontrado' });
+//     }
 
-    // Verificar la contraseña encriptada
-     const isPasswordCorrect = await bcrypt.compare(password, admin.password);
-     if (!isPasswordCorrect) {
-       // La contraseña no es correcta
-       return res.status(400).json({ message: 'Contraseña incorrecta' });
-     }
+//     // Verificar la contraseña encriptada
+//      const isPasswordCorrect = await bcrypt.compare(password, admin.password);
+//      if (!isPasswordCorrect) {
+//        // La contraseña no es correcta
+//        return res.status(400).json({ message: 'Contraseña incorrecta' });
+//      }
 
-    // Crear un token de autenticación con JWT
-    const token = jwt.sign({ id: admin._id, username: Admin.username }, SECRET_KEY, { expiresIn: '1h' });
+//     // Crear un token de autenticación con JWT
+//     const token = jwt.sign({ id: admin._id, username: Admin.username }, SECRET_KEY, { expiresIn: '1h' });
     
-    // Enviar el token de autenticación en la respuesta
-    res.status(200).json({ message:'OK', token });
-  } catch (error) {
-    // Error del servidor
-    res.status(500).json({ message: 'Error del servidor' });
-  }
-};
+//     // Enviar el token de autenticación en la respuesta
+//     res.status(200).json({ message:'OK', token });
+//   } catch (error) {
+//     // Error del servidor
+//     res.status(500).json({ message: 'Error del servidor' });
+//   }
+// };
 
 export const changePassword = async (req, res) => {
   const { userId } = res.locals.jwtPayload;

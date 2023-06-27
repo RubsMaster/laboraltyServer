@@ -1,4 +1,4 @@
-import Admin from '../models/admin/Admin.js';
+import User from '../models/Credential.js';  
 
 export const checkRole = (roles) => {
   return async (req, res, next) => {
@@ -6,7 +6,7 @@ export const checkRole = (roles) => {
     let user;
 
     try {
-      user = await Admin.findById(userId);
+      user = await User.findById(userId);
       if (!user) {
         return res.status(401).send();
       }

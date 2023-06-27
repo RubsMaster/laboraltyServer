@@ -3,10 +3,10 @@
  import Admin from '../../models/admin/Admin.js';
 
  export const createAdmin = async  (req, res) => {
-   const { username, password, role } = req.body;
+   const { user, password, role } = req.body;
    const hashedPassword = await bcrypt.hash(password, 10);
    const admin = new Admin({
-     username,
+     user,
      password: hashedPassword,
      role
    });

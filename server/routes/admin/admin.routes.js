@@ -15,7 +15,7 @@ import { checkRole } from "../../middlewares/role.middleware.js";
 const router = Router();
 
 //Ruta para crear un nuevo administrador
-router.post("/users/create",[checkJwt, checkRole(['admin'])], createAdmin);
+router.post("/users/create", createAdmin);
 router.get("/users", [checkJwt, checkRole(['admin'])], getAdmins);
 router.put("/users/updateUser/:id", [checkJwt, checkRole(['admin'])], updateAdmin);
 // Ruta para eliminar un administrador por su ID
