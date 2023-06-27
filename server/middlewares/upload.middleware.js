@@ -2,10 +2,19 @@ import { connectDB } from "../db.js";
 import util from "util";
 import multer from "multer";
 import { GridFsStorage } from "multer-gridfs-storage";
+import path from "path";
+import fs from 'fs';
+
+const __basedir = path.resolve();
+
+const connectionOptions = await connectDB();
 
 const storage = new GridFsStorage({
-  url: connectDB.url + connectDB.database,
+  url: connectionOptions.url,
   options: { useNewUrlParser: true, useUnifiedTopology: true },
+  destination: (req, file, cb) => {
+    cb(null, __basedir + "/resources/static/assets/uploads/");
+  },
   file: (req, file) => {
     const match = ["image/png", "image/jpeg"];
 
@@ -15,7 +24,7 @@ const storage = new GridFsStorage({
     }
 
     return {
-      bucketName: connectDB.imgBucket,
+      bucketName: connectionOptions.database,
       filename: `${Date.now()}-bezkoder-${file.originalname}`
     };
   }
