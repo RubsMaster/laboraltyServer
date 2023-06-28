@@ -10,6 +10,7 @@ import credentialRoutes from "./routes/credential.routes.js";
 import consultantRoutes from "./routes/accountant/consultants.routes.js"
 import clientRoutes from "./routes/accountant/clients.routes.js";
 import fileRoutes from "./routes/file.routes.js";
+import serviceLogRoutes from "./routes/accountant/service-log.routes.js";
 
 const app = express();
 //midleware
@@ -25,6 +26,7 @@ app.use(adminRoutes);
 app.use(clientRoutes);
 app.use(credentialRoutes);
 app.use(consultantRoutes);
-app.use(fileRoutes)
+app.use(fileRoutes);
+app.use(serviceLogRoutes);
 
 export default app
