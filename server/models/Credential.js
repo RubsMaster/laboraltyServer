@@ -9,7 +9,7 @@ const credentialSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  rol: {
+  role: {
     type: String,
     required: true,
   },

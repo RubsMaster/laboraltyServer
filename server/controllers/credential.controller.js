@@ -85,99 +85,40 @@ export const createCredential = async (req, res) => {
     }
   };
 
-
-//  export const logInUser = async (req, res) => {
-//     const { user, password } = req.body;
-//     try {
-//       // Buscar el administrador en la base de datos
-//       const loggedUser = await Admin.findOne({ user });
-//       if (!loggedUser) {
-//         // El administrador no existe en la base de datos
-//         const otherUser = await Credential.findOne({ user });
-//         if (!otherUser) {
-//           // El administrador no existe en la otra colección
-//           return res.status(404).json({ message: 'Usuario no encontrado' });
-//         }
-//       }
-//       const isPasswordCorrect = await bcrypt.compare(password, otherUser.password);
-//       if (!isPasswordCorrect) {
-//         // La contraseña no es correcta
-//         return res.status(400).json({ message: 'Contraseña incorrecta' });
-//       }
-//       // Crear un token de autenticación con JWT para el usuario encontrado en la otra colección
-//       const token = jwt.sign({ id: otherUser._id, user: OtherCollection.user }, SECRET_KEY, { expiresIn: '1h' });
-//       // Enviar el token de autenticación en la respuesta
-//       return res.status(200).json({ message: 'OK', token });
-//     }
-//       // Verificar la contraseña encriptada
-//        const isPasswordCorrect = await bcrypt.compare(password, loggedUser.password);
-//        if (!isPasswordCorrect) {
-//          // La contraseña no es correcta
-//          return res.status(400).json({ message: 'Contraseña incorrecta' });
-//        }
   
-//       // Crear un token de autenticación con JWT
-//       const token = jwt.sign({ id: loggedUser._id, user: Admin.user }, SECRET_KEY, { expiresIn: '1h' });
-      
-//       // Enviar el token de autenticación en la respuesta
-//       res.status(200).json({ message:'OK', token });
-//     } catch (error) {
-//       // Error del servidor
-//       res.status(500).json({ message: 'Error del servidor' });
-//     }
-//   };
+  export const changePassword = async (req, res) => {
+    const { userId } = res.locals.jwtPayload;
+    const { oldPassword, newPassword } = req.body;
   
-
-// export const updateUser = async (req, res) => {
-//     const {
-//       businessName,
-//       RFC,
-//       firstNameTitular,
-//       lastNameTitular,
-//       email,
-//       street,
-//       innerNumber,
-//       outdoorNumber,
-//       zipCode,
-//       suburb,
-//       city,
-//       state,
-//       officePhoneNumber,
-//       mobilePhoneNumber,
-//       totalEmployees,
-//       totalRFC,
-//       monthlyDebt,
-//       userAssigned,
-//       passwordAssigned
-//     } = req.body;
+    try {
+      //buscamos el usuario por el id en ambas colecciones
+      const admin = await Admin.findById(userId);
+      const credentials = await Credentials.findById(userId);
   
-//     let user = await Users.findById(req.params.id);
+      // Si no encuentra al usuario en ninguna de las dos colecciones
+      if (!admin && !credentials) {
+        return res.status(404).json({ message: 'User not found' });
+      }
   
-//     if (!user) {
-//       res.status(404).json({msg: 'No existe el usuario'})
-//     }
+      // Seleccionar el usuario que fue encontrado
+      const user = admin || credentials;
   
-//     // Validar cada variable antes de asignarla al usuario
-//     user.businessName = businessName ? businessName : user.businessName;
-//     user.RFC = RFC ? RFC : user.RFC;
-//     user.firstNameTitular = firstNameTitular ? firstNameTitular : user.firstNameTitular;
-//     user.lastNameTitular = lastNameTitular ? lastNameTitular : user.lastNameTitular;
-//     user.email = email ? email : user.email;
-//     user.street = street ? street : user.street;
-//     user.innerNumber = innerNumber ? innerNumber : user.innerNumber;
-//     user.outdoorNumber = outdoorNumber ? outdoorNumber : user.outdoorNumber;
-//     user.zipCode = zipCode ? zipCode : user.zipCode;
-//     user.suburb = suburb ? suburb : user.suburb;
-//     user.city = city ? city : user.city;
-//     user.state = state ? state : user.state;
-//     user.officePhoneNumber = officePhoneNumber ? officePhoneNumber : user.officePhoneNumber;
-//     user.mobilePhoneNumber = mobilePhoneNumber ? mobilePhoneNumber : user.mobilePhoneNumber;
-//     user.totalEmployees = totalEmployees ? totalEmployees : user.totalEmployees;
-//     user.totalRFC = totalRFC ? totalRFC : user.totalRFC;
-//     user.monthlyDebt = monthlyDebt ? monthlyDebt : user.monthlyDebt;
-//     user.userAssigned = userAssigned ? userAssigned : user.userAssigned;
-//     user.passwordAssigned = passwordAssigned ? passwordAssigned : user.passwordAssigned;
+      // Verificar la contraseña antigua
+      const isMatch = await bcrypt.compare(oldPassword, user.password);
+      if (!isMatch) {
+        return res.status(400).json({ message: 'Invalid credentials' });
+      }
   
-//     await user.save()
-//     res.send(user);
-//   }
+      //encriptacion 
+      const salt = await bcrypt.genSalt(10);
+      user.password = await bcrypt.hash(newPassword, salt);
+  
+      await user.save();
+  
+      //Envia la resopuesta satisfactoria
+      return res.json({ message: 'Password changed successfully' });
+    } catch (error) {
+      return res.status(500).json({ message: 'Internal Server Error' });
+    }
+  };
+  
