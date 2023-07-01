@@ -1,8 +1,11 @@
 import bcrypt from 'bcrypt';
 import Credential from "../models/Credential.js";
+import jwt from 'jsonwebtoken';
+import { SECRET_KEY } from "../config.js";
+import Admin from '../models/admin/Admin.js';
 
 export const createCredential = async (req, res) => {
-    const { user, password, rol, relatedId } = req.body;
+    const { user, password, role, relatedId } = req.body;
 
     // Encriptación de la contraseña
     const salt = await bcrypt.genSalt(10);
@@ -11,7 +14,7 @@ export const createCredential = async (req, res) => {
     const newCredential = new Credential({
         user,
         password: hashedPassword, // Asignar la contraseña encriptada
-        rol,
+        role,
         relatedId
     });
     
@@ -38,57 +41,84 @@ export const createCredential = async (req, res) => {
      res.send(cred)
  }
 
+ export const logInUser = async (req, res) => {
+    const { user, password } = req.body;
+    try {
+      // Buscar el administrador en la base de datos
+      const admin = await Admin.findOne({ user });
+      if (!admin) {
+        // El administrador no existe en la colección Credential
+        // Intentar buscar en otra colección
+        const accountant = await Credential.findOne({ user });
+        if (!accountant) {
+          // El administrador no existe en la otra colección
+          return res.status(404).json({ message: 'Usuario no encontrado' });
+        }
+        // Verificar la contraseña encriptada para el usuario encontrado en la otra colección
+        const isPasswordCorrect = await bcrypt.compare(password, accountant.password);
+        if (!isPasswordCorrect) {
+          // La contraseña no es correcta
+          return res.status(400).json({ message: 'Contraseña incorrecta' });
+        }
+        // Crear un token de autenticación con JWT para el usuario encontrado en la otra colección
+        const token = jwt.sign({ id: accountant._id, user: Credential.user }, SECRET_KEY, { expiresIn: '1h' });
 
-// export const updateUser = async (req, res) => {
-//     const {
-//       businessName,
-//       RFC,
-//       firstNameTitular,
-//       lastNameTitular,
-//       email,
-//       street,
-//       innerNumber,
-//       outdoorNumber,
-//       zipCode,
-//       suburb,
-//       city,
-//       state,
-//       officePhoneNumber,
-//       mobilePhoneNumber,
-//       totalEmployees,
-//       totalRFC,
-//       monthlyDebt,
-//       userAssigned,
-//       passwordAssigned
-//     } = req.body;
+        // Enviar el token de autenticación en la respuesta
+        return res.status(200).json({ message: 'OK', token });
+      }
   
-//     let user = await Users.findById(req.params.id);
+      // Verificar la contraseña encriptada para el administrador encontrado en la colección Credential
+      const isPasswordCorrect = await bcrypt.compare(password, admin.password);
+      if (!isPasswordCorrect) {
+        // La contraseña no es correcta
+        return res.status(400).json({ message: 'Contraseña incorrecta' });
+      }
   
-//     if (!user) {
-//       res.status(404).json({msg: 'No existe el usuario'})
-//     }
+      // Crear un token de autenticación con JWT para el administrador encontrado en la colección Credential
+      const token = jwt.sign({ id: admin._id, user: Admin.user }, SECRET_KEY, { expiresIn: '1h' });
   
-//     // Validar cada variable antes de asignarla al usuario
-//     user.businessName = businessName ? businessName : user.businessName;
-//     user.RFC = RFC ? RFC : user.RFC;
-//     user.firstNameTitular = firstNameTitular ? firstNameTitular : user.firstNameTitular;
-//     user.lastNameTitular = lastNameTitular ? lastNameTitular : user.lastNameTitular;
-//     user.email = email ? email : user.email;
-//     user.street = street ? street : user.street;
-//     user.innerNumber = innerNumber ? innerNumber : user.innerNumber;
-//     user.outdoorNumber = outdoorNumber ? outdoorNumber : user.outdoorNumber;
-//     user.zipCode = zipCode ? zipCode : user.zipCode;
-//     user.suburb = suburb ? suburb : user.suburb;
-//     user.city = city ? city : user.city;
-//     user.state = state ? state : user.state;
-//     user.officePhoneNumber = officePhoneNumber ? officePhoneNumber : user.officePhoneNumber;
-//     user.mobilePhoneNumber = mobilePhoneNumber ? mobilePhoneNumber : user.mobilePhoneNumber;
-//     user.totalEmployees = totalEmployees ? totalEmployees : user.totalEmployees;
-//     user.totalRFC = totalRFC ? totalRFC : user.totalRFC;
-//     user.monthlyDebt = monthlyDebt ? monthlyDebt : user.monthlyDebt;
-//     user.userAssigned = userAssigned ? userAssigned : user.userAssigned;
-//     user.passwordAssigned = passwordAssigned ? passwordAssigned : user.passwordAssigned;
+      // Enviar el token de autenticación en la respuesta
+      res.status(200).json({ message: 'OK', token });
+    } catch (error) {
+      // Error del servidor
+      res.status(500).json({ message: 'Error del servidor' });
+    }
+  };
+
   
-//     await user.save()
-//     res.send(user);
-//   }
+  export const changePassword = async (req, res) => {
+    const { userId } = res.locals.jwtPayload;
+    const { oldPassword, newPassword } = req.body;
+  
+    try {
+      //buscamos el usuario por el id en ambas colecciones
+      const admin = await Admin.findById(userId);
+      const credentials = await Credentials.findById(userId);
+  
+      // Si no encuentra al usuario en ninguna de las dos colecciones
+      if (!admin && !credentials) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+  
+      // Seleccionar el usuario que fue encontrado
+      const user = admin || credentials;
+  
+      // Verificar la contraseña antigua
+      const isMatch = await bcrypt.compare(oldPassword, user.password);
+      if (!isMatch) {
+        return res.status(400).json({ message: 'Invalid credentials' });
+      }
+  
+      //encriptacion 
+      const salt = await bcrypt.genSalt(10);
+      user.password = await bcrypt.hash(newPassword, salt);
+  
+      await user.save();
+  
+      //Envia la resopuesta satisfactoria
+      return res.json({ message: 'Password changed successfully' });
+    } catch (error) {
+      return res.status(500).json({ message: 'Internal Server Error' });
+    }
+  };
+  
