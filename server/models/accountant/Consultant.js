@@ -24,6 +24,9 @@ const consultantSchema = new mongoose.Schema({
     },
     passwordAssigned: {
         type: String
+    },
+    imageName: {
+        type: String
     }
 });
 
