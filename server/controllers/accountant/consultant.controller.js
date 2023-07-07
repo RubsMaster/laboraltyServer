@@ -9,7 +9,8 @@ export const createConsultant = async (req, res) => {
         officePhonenumber,
         mobilePhonenumber,
         userAssigned,
-        passwordAssigned
+        passwordAssigned,
+        imageName
     } = req.body;
     const newConsultant = new Consultant({
         jobTitle,
@@ -19,7 +20,8 @@ export const createConsultant = async (req, res) => {
         officePhonenumber,
         mobilePhonenumber,
         userAssigned,
-        passwordAssigned
+        passwordAssigned,
+        imageName
     });
     
     await newConsultant.save()
