@@ -42,6 +42,20 @@ const clientSchema = new mongoose.Schema({
     },
     email: {
         type: String
+    },
+    userAssigned: {
+        type: String
+    },
+    passwordAssigned: {
+        type: String
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
+    },
+    updatedAt: {
+        type: Date,
+        default: Date.now
     }
 });
 
