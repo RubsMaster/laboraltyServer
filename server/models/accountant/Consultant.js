@@ -24,6 +24,14 @@ const consultantSchema = new mongoose.Schema({
     },
     passwordAssigned: {
         type: String
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
+    },
+    updatedAt: {
+        type: Date,
+        default: Date.now
     }
 });
 
