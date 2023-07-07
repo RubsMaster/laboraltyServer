@@ -7,12 +7,14 @@ import {
  } from "../controllers/credential.controller.js";
 
  import { checkRole } from "../middlewares/role.middleware.js";
+ import { checkJwt } from "../middlewares/admin.middleware.js";
+
 
 
 const router = Router();
 
-router.post('/createCredential', createCredential);
-router.get('/getAllCredentials', getAllCredentials);
+router.post('/createCredential', [checkJwt, checkRole(['admin'])], createCredential);
+router.get('/getAllCredentials', [checkJwt, checkRole(['ACCOUNTANT'])], getAllCredentials);
 router.get('/getCredential/:name', getCredential);
 router.post('/auth/login', logInUser);
 // router.post('/auth/change-password', [checkJwt], changePassword);
