@@ -15,6 +15,8 @@ export const createClient = async (req, res) => {
         jobTitle,
         phoneNumber,
         extension,
+        userAssigned,
+        passwordAssigned,
         email
     } = req.body;
     const newClient = new Client({
@@ -31,6 +33,8 @@ export const createClient = async (req, res) => {
         jobTitle,
         phoneNumber,
         extension,
+        userAssigned,
+        passwordAssigned,
         email
     });
     
