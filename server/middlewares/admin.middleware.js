@@ -52,10 +52,10 @@ export const checkJwt = (req, res, next) => {
   }
 
   // Extraer el userId y username del token descifrado
-  const { relatedId, user } = jwtPayload;
+  const { relatedId, user, role } = jwtPayload;
 
   // Generar un nuevo token con una fecha de expiración actualizada (1 hora)
-  const newToken = jwt.sign({ relatedId, user }, SECRET_KEY, {
+  const newToken = jwt.sign({ relatedId, user, role, token }, SECRET_KEY, {
     expiresIn: "1h",
   });
 

@@ -56,7 +56,7 @@ export const logInUser = async (req, res) => {
     // Generar el token de JWT para el usuario que ha iniciado sesión
     const token = jwt.sign(
       {
-        userId: foundUser.relatedId,
+        relatedId: foundUser.relatedId,
         user: Credential.user,
         role: foundUser.role,
         user: foundUser.user,
@@ -69,8 +69,9 @@ export const logInUser = async (req, res) => {
     res.json({
       message: "OK",
       token,
-      role: foundUser.role,
       user: foundUser.user,
+      role: foundUser.role,
+      relatedId : foundUser.relatedId 
     });
   } catch (e) {
     console.error(e); // Mostrar el error en la consola
