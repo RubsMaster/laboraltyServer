@@ -43,6 +43,12 @@ const clientSchema = new mongoose.Schema({
     email: {
         type: String
     },
+    totalRFC: {
+        type: String
+    },
+    totalEmployees: {
+        type: String
+    },
     userAssigned: {
         type: String
     },

@@ -17,7 +17,9 @@ export const createClient = async (req, res) => {
         extension,
         userAssigned,
         passwordAssigned,
-        email
+        email,
+        totalRFC,
+        totalEmployees
     } = req.body;
     const newClient = new Client({
         businessName,
@@ -35,7 +37,9 @@ export const createClient = async (req, res) => {
         extension,
         userAssigned,
         passwordAssigned,
-        email
+        email,
+        totalEmployees,
+        totalRFC
     });
     
     await newClient.save()
