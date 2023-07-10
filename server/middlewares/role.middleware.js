@@ -32,18 +32,23 @@ import Credential from "../models/Credential.js";
 
 export const checkRole = (roles) => {
   return async (req, res, next) => {
-    // console.log(res.locals.jwtPayload);
+    // jwtPayload = jwt.verify(token, SECRET_KEY);
     const { relatedId } = res.locals.jwtPayload;
+    console.log(res.locals.jwtPayload);
     let user;
+    // console.log(userId)
     try {
-      user = await Credential.findById(relatedId);
+      user = await Credential.findOne({relatedId: relatedId});
+      // console.log(user)
       if (!user) {
-        return res.status(401).json({ message: 'ups' });
+        return res.status(401).json({ message: 'Not found' });
       }
+  //     if(user === userId){
+  //   console.log(userId + user)
+  // }
     } catch (e) {
       return res.status(401).json({ message: 'Not Authorized' });
     }
-
     const { role } = user;
     if (roles.includes(role)) {
       next();
