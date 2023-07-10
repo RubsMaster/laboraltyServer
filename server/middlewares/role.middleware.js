@@ -39,6 +39,7 @@ export const checkRole = (roles) => {
     // console.log(userId)
     try {
       user = await Credential.findOne({relatedId: relatedId});
+      console.log(user)
       // console.log(user)
       if (!user) {
         return res.status(401).json({ message: 'Not found' });
