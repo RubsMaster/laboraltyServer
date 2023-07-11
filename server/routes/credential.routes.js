@@ -16,7 +16,7 @@ const router = Router();
 router.post('/createCredential', createCredential);
 //  router.post('/createCredential', [checkJwt, checkRole(['admin'])], createCredential);
 router.get('/getAllCredentials', getAllCredentials);
-//router.get('/getAllCredentials', [checkJwt, checkRole(['ACCOUNTANT'])], getAllCredentials);
+router.get('/getAllCredentials', [checkJwt, checkRole(['ADMIN'])], getAllCredentials);
 router.get('/getCredential/:name', getCredential);
 router.post('/auth/login', logInUser);
 // router.post('/auth/change-password', [checkJwt], changePassword);
