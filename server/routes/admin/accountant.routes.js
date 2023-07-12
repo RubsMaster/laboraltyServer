@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { 
-    createAccountnat,
+    createAccountant,
     getAllAccountants,
     updateAccountant,
     getAccountant
@@ -8,9 +8,9 @@ import {
 
 const router = Router();
 
-router.post('/admin/createAccountant', createAccountnat);
-router.get('/admin/getAllAccountant', getAllAccountants);
-router.get('/admin/getAccountant/:id', getAccountant);
-router.patch('/admin/updateUser/:id', updateAccountant);
+router.post('/createAccountant', createAccountant);
+router.get('/getAllAccountants', getAllAccountants);
+router.get('/getAccountant/:id', getAccountant);
+router.patch('/updateUser/:id', updateAccountant);
 
 export default router;

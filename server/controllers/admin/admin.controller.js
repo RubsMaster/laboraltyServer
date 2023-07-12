@@ -10,8 +10,9 @@
      password: hashedPassword,
      role
    });
+   console.log("admin" + admin)
    await admin.save();
-   return res.status(200).json(admin);
+   return res.json(admin);
  }
 
 export const getAllAdmins = async (req, res) => {

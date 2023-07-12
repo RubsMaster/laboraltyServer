@@ -17,7 +17,7 @@ const router = Router();
 
 //Ruta para crear un nuevo administrador
 router.post("/createAdmin", createAdmin);
-router.get("/admin", getAllAdmins);
+router.get("/getAllAdmins", getAllAdmins);
 router.get("/getAdmin/:id", getAdmin);
 router.put("/admin/updateUser/:id", updateAdmin);
 // Ruta para eliminar un administrador por su ID
