@@ -14,7 +14,7 @@
    return res.status(200).json(admin);
  }
 
-export const getAdmins = async (req, res) => {
+export const getAllAdmins = async (req, res) => {
   try {
     const users = await Admin.find();
     res.send(users)
@@ -28,6 +28,20 @@ export const deleteAdmin = async (req, res) => {
   await Admin.findByIdAndDelete(req.params.id);
   return res.json({ message: 'Administrador eliminado correctamente' });
 }
+
+export const getAdmin = async (req, res) => {
+  const admin = await Admin.find();
+    res.send(admin)
+}
+
+
+
+
+
+
+
+
+
 
 export const updateAdmin = async (req, res) => {
   const { id } = req.params;
