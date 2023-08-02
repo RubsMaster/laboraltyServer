@@ -62,6 +62,9 @@ const clientSchema = new mongoose.Schema({
     updatedAt: {
         type: Date,
         default: Date.now
+    },
+    assignedTo: {
+        type: String
     }
 });
 

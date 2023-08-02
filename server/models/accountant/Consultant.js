@@ -38,6 +38,9 @@ const consultantSchema = new mongoose.Schema({
     updatedAt: {
         type: Date,
         default: Date.now
+    },
+    createdBy: {
+        type: String
     }
 });
 

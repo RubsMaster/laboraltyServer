@@ -1,4 +1,5 @@
 import Client from "../../models/accountant/Client.js";
+import Accountant from "../../models/admin/Accountant.js";
 
 export const createClient = async (req, res) => {
     const {
@@ -19,8 +20,10 @@ export const createClient = async (req, res) => {
         passwordAssigned,
         email,
         totalRFC,
-        totalEmployees
+        totalEmployees,
+        assignedTo
     } = req.body;
+    
     const newClient = new Client({
         businessName,
         taxRegime,
@@ -39,11 +42,20 @@ export const createClient = async (req, res) => {
         passwordAssigned,
         email,
         totalEmployees,
-        totalRFC
+        totalRFC,
+        assignedTo
     });
     
+    const accountant = await Accountant.findOne({
+        _id: newClient.assignedTo
+    })
+    
+    if (!accountant) {
+        return res.status(404).json({ error: 'El usuario Accountant no existe' });
+    }
+    
     await newClient.save()
-    console.log('CLient created succesfully')
+    console.log('Client created succesfully')
     
     return res.json(newClient)
 };

@@ -69,7 +69,6 @@ export const getDocByName = async (req, res) => {
     res.json(doc);
 };
 
-
 export const deleteDoc = async (req, res) => {
     const borrr = await LaborDocuments.findByIdAndRemove(req.params.id)
     res.send("se elimino con exito")

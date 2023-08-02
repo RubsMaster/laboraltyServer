@@ -24,8 +24,6 @@ export const getAllAccountants = async (req, res) => {
 
 export const getAccountant = async (req, res) => {
     const accountant = await Accountant.findById(req.params.id)
-    console.log("id: " + req.params.id)
-    console.log("response: " + accountant)
     res.send(accountant)
 }
 
