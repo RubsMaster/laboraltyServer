@@ -2,6 +2,9 @@ import bcrypt from "bcrypt";
 import Credential from "../models/Credential.js";
 import jwt from "jsonwebtoken";
 import { SECRET_KEY } from "../config.js";
+import Accountant from "../models/admin/Accountant.js";
+import Client from "../models/accountant/Client.js";
+import Consultant from "../models/accountant/Consultant.js";
 
 export const createCredential = async (req, res) => {
   const { user, password, role, relatedId } = req.body;
@@ -23,12 +26,6 @@ export const createCredential = async (req, res) => {
   return res.json(newCredential);
 };
 
-// export const deleteUser = async (req, res) => {
-//     const post = await Users.findByIdAndDelete(req.params.id);
-//     if (!post) return res.sendStatus(404);
-//     return res.sendStatus(204);
-// };
-
 export const getAllCredentials = async (req, res) => {
   const credentials = await Credential.find();
   res.send(credentials);
@@ -48,6 +45,19 @@ export const logInUser = async (req, res) => {
 
   try {
     const foundUser = await Credential.findOne({ user });
+    console.log("foundUser" + foundUser)
+    let foundRoleInfo
+    if (foundUser.role === "Accountant") {
+      foundRoleInfo = await Accountant.findById(foundUser.relatedId)
+    } else if (foundUser.role === "Consultant") {
+      foundRoleInfo = await Consultant.findById(foundUser.relatedId)
+    } else if (foundUser.role === "Client") {
+      foundRoleInfo = await Client.findById(foundUser.relatedId)
+    } else {
+      console.log("error en la solicitud de información según el rol")
+    }
+
+    console.log(foundRoleInfo)
 
     if (!foundUser || !(await bcrypt.compare(password, foundUser.password))) {
       return res.status(400).json({ message: "User or password incorrect!" });
@@ -57,22 +67,25 @@ export const logInUser = async (req, res) => {
     const token = jwt.sign(
       {
         relatedId: foundUser.relatedId,
-        user: Credential.user,
+        userCredential: Credential.user,
         role: foundUser.role,
-        user: foundUser.user,
+        username: foundUser.user
       },
       SECRET_KEY,
       {
         expiresIn: "2h", // El token expira en 2 horas
       }
     );
+
     res.json({
       message: "OK",
       token,
       user: foundUser.user,
       role: foundUser.role,
-      relatedId : foundUser.relatedId 
+      relatedId: foundUser.relatedId,
+      foundRoleInfo: foundRoleInfo
     });
+    
   } catch (e) {
     console.error(e); // Mostrar el error en la consola
     return res.status(500).json({ message: "Internal server error" });
