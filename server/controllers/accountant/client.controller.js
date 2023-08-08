@@ -1,5 +1,6 @@
 import Client from "../../models/accountant/Client.js";
 import Accountant from "../../models/admin/Accountant.js";
+import Consultant from "../../models/accountant/Consultant.js"
 
 export const createClient = async (req, res) => {
     const {
@@ -21,7 +22,8 @@ export const createClient = async (req, res) => {
         email,
         totalRFC,
         totalEmployees,
-        assignedTo
+        assignedTo,
+        createdBy
     } = req.body;
     
     const newClient = new Client({
@@ -43,10 +45,13 @@ export const createClient = async (req, res) => {
         email,
         totalEmployees,
         totalRFC,
-        assignedTo
+        assignedTo,
+        createdBy
     });
+    console.log("objeto recibido: " + newClient)
+    console.log("Assigned: " + newClient.assignedTo)
     
-    const accountant = await Accountant.findOne({
+    const accountant = await Consultant.findOne({
         _id: newClient.assignedTo
     })
     

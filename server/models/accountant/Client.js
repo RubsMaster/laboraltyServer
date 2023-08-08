@@ -65,6 +65,9 @@ const clientSchema = new mongoose.Schema({
     },
     assignedTo: {
         type: String
+    },
+    createdBy: {
+        type: String
     }
 });
 
