@@ -31,8 +31,22 @@ export const deleteAdmin = async (req, res) => {
 }
 
 export const getAdmin = async (req, res) => {
-  const admin = await Admin.find();
-    res.send(admin)
+  try {
+    console.log(req.params.id);
+    const admin = await Admin.findById(req.params.id);
+
+    if (!admin) {
+      // Si no se encontró el admin, enviar una respuesta 404 (No encontrado)
+      return res.status(404).send({ message: "Admin not found" });
+    }
+
+    // Si se encontró el admin, enviarlo en la respuesta
+    res.send(admin);
+  } catch (error) {
+    // Si hay un error, manejarlo y enviar una respuesta de error
+    console.error(error);
+    res.status(500).send({ message: "Internal server error" });
+  }
 }
 
 

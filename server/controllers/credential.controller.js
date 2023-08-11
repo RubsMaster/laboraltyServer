@@ -5,6 +5,7 @@ import { SECRET_KEY } from "../config.js";
 import Accountant from "../models/admin/Accountant.js";
 import Client from "../models/accountant/Client.js";
 import Consultant from "../models/accountant/Consultant.js";
+import Admin from "../models/admin/Admin.js";
 
 export const createCredential = async (req, res) => {
   const { user, password, role, relatedId } = req.body;
@@ -53,6 +54,8 @@ export const logInUser = async (req, res) => {
       foundRoleInfo = await Consultant.findById(foundUser.relatedId)
     } else if (foundUser.role === "Client") {
       foundRoleInfo = await Client.findById(foundUser.relatedId)
+    } else if (foundUser.role === "Admin") {
+      foundRoleInfo = await Admin.findById(foundUser.relatedId)
     } else {
       console.log("error en la solicitud de información según el rol")
     }
