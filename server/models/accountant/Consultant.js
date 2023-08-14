@@ -41,6 +41,9 @@ const consultantSchema = new mongoose.Schema({
     },
     createdBy: {
         type: String
+    },
+    logoImgName: {
+        type: String
     }
 });
 

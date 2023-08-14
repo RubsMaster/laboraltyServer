@@ -25,13 +25,13 @@ const storage = new GridFsStorage({
     const match = ["image/png", "image/jpeg"];
 
     if (match.indexOf(file.mimetype) === -1) {
-      const filename = `${Date.now()}-bezkoder-${file.originalname}`;
+      const filename = `${Date.now()}-laboralty-${file.originalname}`;
       return filename;
     }
 
     return {
       bucketName: connectionOptions.database,
-      filename: `${Date.now()}-bezkoder-${file.originalname}`
+      filename: `${Date.now()}-laboralty-${file.originalname}`
     };
   }
 });

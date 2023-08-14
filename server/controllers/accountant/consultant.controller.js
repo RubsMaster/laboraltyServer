@@ -32,11 +32,6 @@ export const createConsultant = async (req, res) => {
     return res.json(newConsultant)
 };
 
-// export const deleteUser = async (req, res) => {
-//     const post = await Users.findByIdAndDelete(req.params.id);
-//     if (!post) return res.sendStatus(404);
-//     return res.sendStatus(204);
-// };
 
 export const getAllConsultants = async (req, res) => {
     const consultants = await Consultant.find();
@@ -46,6 +41,29 @@ export const getAllConsultants = async (req, res) => {
 export const getConsultant = async (req, res) => {
     const consultant = await Consultant.findById(req.params.id)
     res.send(consultant)
+}
+
+export const updateLogoImg = async (req, res) => {
+    try {
+        const consultant = await Consultant.findByIdAndUpdate(
+            req.params.id,
+            {
+                $set: { logoImgName: req.params.newLogoImg }
+            },
+            {
+                new: true
+            }
+        )
+
+        if (!consultant) {
+            return res.status(404).json({ message: 'Consultant not found' });
+        }
+
+        return res.json(consultant);        
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Internal server error' });
+    }
 }
 
 // export const updateClient = async (req, res) => {
