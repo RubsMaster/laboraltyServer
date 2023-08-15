@@ -57,6 +57,9 @@ const accounantSchema = new mongoose.Schema({
     },
     passwordAssigned: {
         type: String,
+    },
+    logoImgName: {
+        type: String
     }
 });
 

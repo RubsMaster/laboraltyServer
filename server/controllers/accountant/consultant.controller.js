@@ -43,29 +43,6 @@ export const getConsultant = async (req, res) => {
     res.send(consultant)
 }
 
-export const updateLogoImg = async (req, res) => {
-    try {
-        const consultant = await Consultant.findByIdAndUpdate(
-            req.params.id,
-            {
-                $set: { logoImgName: req.params.newLogoImg }
-            },
-            {
-                new: true
-            }
-        )
-
-        if (!consultant) {
-            return res.status(404).json({ message: 'Consultant not found' });
-        }
-
-        return res.json(consultant);        
-    } catch (error) {
-        console.error(error);
-        return res.status(500).json({ message: 'Internal server error' });
-    }
-}
-
 // export const updateClient = async (req, res) => {
 //     const {
 //       businessName,

@@ -42,3 +42,26 @@ export const updateAccountant = async (req, res) => {
     await accountant.save()
     res.send(accountant);
 }
+
+export const updateLogoImg = async (req, res) => {
+    try {
+        const accountant = await Accountant.findByIdAndUpdate(
+            req.params.id,
+            {
+                $set: { logoImgName: req.body.logoImgName }
+            },
+            {
+                new: true
+            }
+        )
+
+        if (!accountant) {
+            return res.status(404).json({ message: 'Accountant not found' });
+        }
+
+        return res.json(accountant);        
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Internal server error' });
+    }
+}
