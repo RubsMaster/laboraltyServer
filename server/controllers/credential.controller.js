@@ -46,7 +46,6 @@ export const logInUser = async (req, res) => {
 
   try {
     const foundUser = await Credential.findOne({ user });
-    console.log("foundUser" + foundUser)
     let foundRoleInfo
     if (foundUser.role === "Accountant") {
       foundRoleInfo = await Accountant.findById(foundUser.relatedId)

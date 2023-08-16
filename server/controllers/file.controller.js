@@ -16,8 +16,6 @@ const conn = mongoose.connection;
 export const uploadFiles = async (req, res) => {
   try {
     await uploadFilesMiddleware(req, res);
-    console.log(req.file);
-    console.log(req.file.filename);
     if (req.file == undefined) {
       return res.send({
         message: "You must select a file."

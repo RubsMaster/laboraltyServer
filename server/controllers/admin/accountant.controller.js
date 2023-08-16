@@ -44,6 +44,7 @@ export const updateAccountant = async (req, res) => {
 }
 
 export const updateLogoImg = async (req, res) => {
+    console.log("req.body.logoImgName:   " + req.body.logoImgName)
     try {
         const accountant = await Accountant.findByIdAndUpdate(
             req.params.id,
@@ -58,6 +59,7 @@ export const updateLogoImg = async (req, res) => {
         if (!accountant) {
             return res.status(404).json({ message: 'Accountant not found' });
         }
+        console.log(`updated logo image name succesfully`)
 
         return res.json(accountant);        
     } catch (error) {
