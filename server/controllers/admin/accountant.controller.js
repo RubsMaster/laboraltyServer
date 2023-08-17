@@ -24,7 +24,7 @@ export const getAllAccountants = async (req, res) => {
 
 export const getAccountant = async (req, res) => {
     const accountant = await Accountant.findById(req.params.id)
-    res.send(accountant)
+    res.json(accountant)
 }
 
 export const updateAccountant = async (req, res) => {

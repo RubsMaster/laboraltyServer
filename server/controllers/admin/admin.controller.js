@@ -32,7 +32,7 @@ export const deleteAdmin = async (req, res) => {
 
 export const getAdmin = async (req, res) => {
   try {
-    console.log(req.params.id);
+    console.log("id que le llega a geAdmin: " + req.params.id);
     const admin = await Admin.findById(req.params.id);
 
     if (!admin) {

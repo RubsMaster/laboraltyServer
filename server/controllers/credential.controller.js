@@ -46,7 +46,7 @@ export const logInUser = async (req, res) => {
 
   try {
     const foundUser = await Credential.findOne({ user });
-    let foundRoleInfo
+    let foundRoleInfo    
     if (foundUser.role === "Accountant") {
       foundRoleInfo = await Accountant.findById(foundUser.relatedId)
     } else if (foundUser.role === "Consultant") {
@@ -55,6 +55,7 @@ export const logInUser = async (req, res) => {
       foundRoleInfo = await Client.findById(foundUser.relatedId)
     } else if (foundUser.role === "Admin") {
       foundRoleInfo = await Admin.findById(foundUser.relatedId)
+      console.log("foundAdmin: " + foundRoleInfo)
     } else {
       console.log("error en la solicitud de información según el rol")
     }
