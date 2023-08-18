@@ -65,6 +65,7 @@ export const createClient = async (req, res) => {
     return res.json(newClient)
 };
 
+
 export const deleteUser = async (req, res) => {
     const post = await Users.findByIdAndDelete(req.params.id);
     if (!post) return res.sendStatus(404);
