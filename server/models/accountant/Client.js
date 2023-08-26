@@ -1,5 +1,12 @@
 import mongoose from "mongoose";
 
+const services = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true
+    }
+});
+
 const clientSchema = new mongoose.Schema({
     businessName: {
         type: String
@@ -68,7 +75,9 @@ const clientSchema = new mongoose.Schema({
     },
     createdBy: {
         type: String
-    }
+    },
+    servicesAssigned: [services]
 });
+
 
 export default mongoose.model('Client', clientSchema)
